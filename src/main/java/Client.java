@@ -14,7 +14,7 @@ public class Client extends JFrame {
         setTitle("WebService Nikolov");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridBagLayout());
-        setPreferredSize(new Dimension(1000,800));
+        setPreferredSize(new Dimension(1200,1000));
         setResizable(false);
         paintContents();
         pack();

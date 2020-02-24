@@ -13,6 +13,7 @@ public class Request {
     private String input;
     private String output;
     private JLabel httpcode;
+    private JLabel errorMessage;
 
 
     public Request() {
@@ -27,16 +28,21 @@ public class Request {
         clientResponse = webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, userInput);
         output = clientResponse.getEntity(String.class);
         httpcode.setText("HTTP Response Code: " + clientResponse.getStatus());
-        JSONObject jsonObject = new JSONObject(output);
-        //output = jsonObject.getString("triggerResponse");
-        jsonObject = jsonObject.getJSONObject("documentB64");
-        output = jsonObject.getString("documentB64");
-        output.replace("documentB64","");
-        output.replaceAll("[^\\\\d\\\\. ]| \\\\.|\\\\.$", "");
+        return output;
+    }
+
+    public String requestGET(String url) {
+        client = Client.create();
+        webResource = client.resource(url);
+        clientResponse =  webResource.accept("application/json").get(ClientResponse.class);
+        output = clientResponse.getEntity(String.class);
+        httpcode.setText("HTTP Response Code: " + clientResponse.getStatus());
         return output;
     }
 
     public void setHttpcode(JLabel httpcode) {
         this.httpcode = httpcode;
     }
+
+    public void setErrorMessage(JLabel errorMessage) {this.errorMessage = errorMessage; }
 }
